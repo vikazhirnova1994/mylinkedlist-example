@@ -197,6 +197,22 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
         quickSortReverse(first, last);
     }
 
+    /**
+     * проверка наличия элемента в списке
+     * @param  value проверяемое значение на наличие в списке
+     */
+    @Override
+    public boolean contains(Comparable value) {
+        Node<T> current = first;
+        while (current.getNext() != null) {
+            if (current.getValue() == value) {
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
     public Node<T> getFirst() {
         return first;
     }
@@ -218,7 +234,7 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * рекурсивный вызов метода для разделения листа на маленькие блоки
      *  @param first  последний элемнет списка
      *  @param last последний элемнет списка
-     * */
+     */
     private void quickSort(Node<T> first, Node<T>  last) {
         Node<T>  mid = null;
         if (first != last) {
@@ -244,13 +260,16 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
 
     /**
      * разделение на базе quicksort
-     * назначение опорного элемнета pivotValue
-     * сравнение элемнетов
-     * перестановка элемнетов, если они меньше опорного
+     * назначение опорного элемнета pivotValue, текущего current, следующего next
+     * сравнение next с pivotValue в цикле,
+     * по завершению каждой итерации цикла передвижение next на один элемнет
+     * если next > pivotValue, передвижение current на один элемнет
+     * по завершению цикла, current будет иметь наименьшее значние
+     * перестановка элемнетов первого элемента
      * @param first  последний элемнет списка
      * @param last последний элемнет списка
-     * @return current
-     * */
+     * @return current текущий элемент до которого лист отсорован
+     */
     private Node<T>  partition(Node<T>  first, Node<T> last) {
         T pivotValue = first.getValue();
         Node<T>  current = first;
@@ -280,13 +299,25 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
         return current;
     }
 
+    /**
+     * перестановка элемнетов
+     * используется временный элемнет temp для замены значений элементов
+     */
     private void swap(Node<T>  element1, Node<T>  element2) {
         T temp = element1.getValue();
         element1.setValue(element2.getValue());
         element2.setValue(temp);
     }
 
-    private Node<T> getMiddleNode(){
+    /**
+     * поиск среднего элемнета
+     * назначение previous, current
+     * previous продвигается на элемнет пока условие true
+     * current продвигается на два элемнет пока условие true
+     * когда условие станет false, current дойдет до конца листа, previous будет на середине
+     * @return Node<T> previous средний элемнет
+     */
+    public Node<T> getMiddleNode(){
         if(first == null || first.getNext() == null) {
             return first;
         }
@@ -296,8 +327,8 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
         while(current != null &&  current.getNext() != null){
             previous = previous.getNext();
             current = current.getNext().getNext();
+
         }
         return previous;
     }
-
 }

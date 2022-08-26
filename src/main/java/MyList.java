@@ -35,4 +35,7 @@ public interface MyList<T extends Comparable> {
 
     /** сортировка в обратном порядке */
     public void reverseSort();
+
+    /** проверка наличия элемента в списке */
+    public boolean contains(T value);
 }

@@ -12,11 +12,14 @@ public class Main {
         list.addFirst(40);
         list.addLast(12);
         list.addLast(17);
-
         print(list);
 
+        System.out.println("List contains 30 "+ list.contains(30));
+
+        System.out.println("Middle Node "+ list.getMiddleNode().getValue());
         list.addMiddle(11);
         print(list);
+        System.out.println("Middle Node "+ list.getMiddleNode().getValue());
 
         list.deleteMiddle();
         print(list);
@@ -30,6 +33,7 @@ public class Main {
 
     static void print(MyLinkedList<Integer> list) {
         Node current = list.getFirst();
+        System.out.print("Values of list ");
         while (current.getNext() != null) {
             System.out.print(current.getValue() + " ");
             current = current.getNext();
@@ -40,6 +44,7 @@ public class Main {
 
     static void printReverse(MyLinkedList<Integer> list) {
         Node current = list.getLast();
+        System.out.print("Values of list ");
         while (current.getPrevious() != null) {
             System.out.print(current.getValue() + " ");
             current = current.getPrevious();
