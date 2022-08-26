@@ -18,7 +18,7 @@ public interface MyList<T extends Comparable> {
     /** добавление элемента в середину списка */
     public void addMiddle(T value);
 
-    /** удаление элемента из середины списка */
+    /** удаление элемента по значению */
     public void delete(T value);
 
     /** удаление первого элемента  */

@@ -66,4 +66,9 @@ public class MyLinkedListTest {
         assertEquals(list.getLast().getValue(),  value2);
     }
 
+    @Test
+    void testContainsValue(){
+        assertEquals(true,  list.contains(3));
+    }
+
 }
