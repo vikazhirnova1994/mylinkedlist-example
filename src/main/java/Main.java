@@ -1,3 +1,6 @@
+import java.util.Comparator;
+import java.util.LinkedList;
+
 /**
  * @author Victoria Zhirnova
  * @project mylinkedlist-example
@@ -22,12 +25,6 @@ public class Main {
         System.out.println("Middle Node "+ list.getMiddleNode().getValue());
 
         list.deleteMiddle();
-        print(list);
-
-        list.sort();
-        print(list);
-
-        list.reverseSort();
         print(list);
     }
 

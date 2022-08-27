@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 /**
  * @author Victoria Zhirnova
  * @project mylinkedlist-example
@@ -7,7 +9,7 @@
  *
  */
 
-public interface MyList<T extends Comparable> {
+public interface MyList<T> {
 
     /** добавление элемента в конец списка */
     public void addLast(T value);
@@ -31,11 +33,12 @@ public interface MyList<T extends Comparable> {
     public void deleteMiddle();
 
     /** натурильная сортировка списка в середину списка */
-    public void sort();
+    public void sort(Comparator<T> comparator);
 
     /** сортировка в обратном порядке */
-    public void reverseSort();
+    public void reverseSort(Comparator<T> comparator);
 
-    /** проверка наличия элемента в списке */
+    /** проверка наличия элемента */
     public boolean contains(T value);
+
 }

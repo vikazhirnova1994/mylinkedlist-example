@@ -1,18 +1,23 @@
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
  * @author Victoria Zhirnova
  * @project mylinkedlist-example
- *
+ * <p>
  * Кастомный односвязный список со свойствами <b>first</b> и <b>last</b>
  */
 
-public class MyLinkedList <T extends Comparable<T>> implements MyList {
+public class MyLinkedList<T> implements MyList {
 
-    /** первый элеменет списка */
+    /**
+     * первый элеменет списка
+     */
     private Node<T> first;
 
-    /** последений элеменет списка */
+    /**
+     * последений элеменет списка
+     */
     private Node<T> last;
 
     /**
@@ -21,11 +26,10 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * next старого последнего элемента назначается новый элемнет
      * previous нового элемента назначается старому последнему элемнета
      *
-     *  @param  value добавляемый элемент
-     *
-     *  */
+     * @param value добавляемый элемент
+     */
     @Override
-    public void addLast(Comparable value) {
+    public void addLast(Object value) {
         Node newLink = new Node(value);
         Node oldLast = last;
         if (isEmpty()) {
@@ -44,10 +48,10 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * next нового элемента назначается старый первый элемнет
      * previous старого первого элемнета назначается новый элемент
      *
-     *  @param  value добавляемый элемент
-     *  */
+     * @param value добавляемый элемент
+     */
     @Override
-    public void addFirst(Comparable value) {
+    public void addFirst(Object value) {
         Node newLink = new Node(value);
         Node oldFirst = first;
         if (isEmpty()) {
@@ -64,15 +68,15 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * добавление элемента в середину списка
      * получение элемента из середине списка middleNode
      * next элемнета перед middleNode назначается новый элемент
-     *  next нового элемнета назначается middleNode
-     *  previous нового элемнета   назначается middleNode
-     *  previous middleNode  назначается новый элемента
+     * next нового элемнета назначается middleNode
+     * previous нового элемнета   назначается middleNode
+     * previous middleNode  назначается новый элемента
      *
-     *  @param  value добавляемое значение элемента
-     *  @throws   NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
-     *  */
+     * @param value добавляемое значение элемента
+     * @throws NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
+     */
     @Override
-    public void addMiddle(Comparable value) {
+    public void addMiddle(Object value) {
         if (!isEmpty()) {
             Node<T> middleNode = getMiddleNode();
             Node<T> previous = middleNode.getPrevious();
@@ -92,21 +96,22 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * если удаляемый элемент - первый,  первым элементом назначается элемент после первого
      * если удаляемый элемент - последний,  последним  назначается элемент перед удаляемым
      * если удаляемый элемент не первый и не последний
-     *  @param  value хранимое значение элемента
-     * @throws   NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
-     *  */
+     *
+     * @param value хранимое значение элемента
+     * @throws NoSuchElementException ошибка выбрасывается, когда элемнет не найден
+     */
     @Override
-    public void delete(Comparable value) {
+    public void delete(Object value) {
         Node<T> current = first;
 
         //удаляемый элемнет является первым
-        if (first.getValue().compareTo((T) value) == 0) {
+        if (first.getValue() == value) {
             first = first.getNext();
             current.setPrevious(current);
         }
 
+        //если искомый элемнет найден
         while (current.getNext() != null) {
-            //если искомый элемнет найден
             if (current.getValue() == value) {
                 current.getPrevious().setNext(current.getNext());
                 current.getNext().setPrevious(current.getPrevious());
@@ -116,20 +121,20 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
         }
         //удаляемый элемнет последний
         if (isLast(current) && current.getValue() == value) {
-            //  System.out.println("-----------------");
             current.getPrevious().setNext(null);
             last = current.getPrevious();
         }
-        // если искомый элемнет равен == data и он последний
+        // если не найден
         else {
-            throw new NullPointerException("Список пуст");
+            throw new NoSuchElementException(" элемнет не найден");
         }
     }
 
     /**
      * удаление первого элемнета
      * первым элемнетом назначается элемент после первого
-     * @throws   NoSuchElementException выбрасываемая ошибка в ситуации, когда удаляемый элемнет не найдет
+     *
+     * @throws NullPointerException выбрасываемая ошибка в ситуации, когда удаляемый элемнет не найдет
      */
     @Override
     public void deleteFirst() {
@@ -137,16 +142,18 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
             Node<T> next = first.getNext();
             next.setPrevious(null);
             first.setNext(null);
-            first  = next;
+            first = next;
         } else {
             throw new NullPointerException("Список пуст");
         }
 
     }
+
     /**
      * удаление последнего элемнета
      * последним элемнетом назначается элемент перед последним
-     * @throws   NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
+     *
+     * @throws NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
      */
     @Override
     public void deleteLast() {
@@ -154,9 +161,9 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
             Node<T> previous = last.getPrevious();
             previous.setNext(null);
             last.setPrevious(null);
-            last  = previous;
+            last = previous;
         } else {
-            throw new NoSuchElementException("Список пуст");
+            throw new NullPointerException("Список пуст");
         }
     }
 
@@ -164,9 +171,10 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * удаление последнего элемнета
      * получение элемента из середине списка middleNode
      * next элемента перед middleNode назначается элемент, следующий после middleNode
-     *  previous элемент, следующий после middleNode,  назначается элементу перед middleNode
-     *  обнуление сслок next, previous  у middleNode
-     * @throws   NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
+     * previous элемент, следующий после middleNode,  назначается элементу перед middleNode
+     * обнуление сслок next, previous  у middleNode
+     *
+     * @throws NullPointerException выбрасываемая ошибка в ситуации, когда список пуст
      */
     @Override
     public void deleteMiddle() {
@@ -185,27 +193,29 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
 
     }
 
-    /** сортировка списка  */
+    /**
+     * сортировка списка
+     *
+     * @param comparator
+     */
     @Override
-    public void sort() {
-        quickSort(first, last);
-    }
-
-    /** сортировка списка в обратном порядке  */
-    @Override
-    public void reverseSort() {
-        quickSortReverse(first, last);
+    public void sort(Comparator comparator) {
+        quickSort(first, last, comparator);
     }
 
     /**
-     * проверка наличия элемента в списке
-     * @param  value проверяемое значение на наличие в списке
+     * сортировка списка в обратном порядке
      */
     @Override
-    public boolean contains(Comparable value) {
+    public void reverseSort(Comparator comparator) {
+        quickSortReverse(first, last, comparator);
+    }
+
+    @Override
+    public boolean contains(Object value) {
         Node<T> current = first;
         while (current.getNext() != null) {
-            if (current.getValue() == value) {
+            if (current.getValue().equals(value)) {
                 return true;
             }
             current = current.getNext();
@@ -232,29 +242,30 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
     /**
      * сортировка на базе quicksort
      * рекурсивный вызов метода для разделения листа на маленькие блоки
-     *  @param first  последний элемнет списка
-     *  @param last последний элемнет списка
+     *
+     * @param first последний элемнет списка
+     * @param last  последний элемнет списка
      */
-    private void quickSort(Node<T> first, Node<T>  last) {
-        Node<T>  mid = null;
+    private void quickSort(Node<T> first, Node<T> last, Comparator comparator) {
+        Node<T> middle = null;
         if (first != last) {
-            mid = partition(first, last);
-            quickSort(first, mid);
-            quickSort(mid.getNext(), last);
+            middle = partition(first, last, comparator);
+            quickSort(first, middle, comparator);
+            quickSort(middle.getNext(), last, comparator);
         } else {
-            partition(last, mid);
+            partition(last, middle, comparator);
         }
     }
 
-    private void quickSortReverse(Node<T> first, Node<T> last) {
-        Node<T> mid = null;
+
+    private void quickSortReverse(Node<T> first, Node<T> last, Comparator comparator) {
+        Node<T> middle = null;
         if (last != first) {
-            mid = partitionReverse(last, first);
-            quickSortReverse(mid, last);
-            quickSortReverse(first, mid.getPrevious());
-        }
-        else {
-            partitionReverse(first, mid);
+            middle = partitionReverse(last, first, comparator);
+            quickSortReverse(middle, last, comparator);
+            quickSortReverse(first, middle.getPrevious(), comparator);
+        } else {
+            partitionReverse(first, middle, comparator);
         }
     }
 
@@ -266,16 +277,18 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * если next > pivotValue, передвижение current на один элемнет
      * по завершению цикла, current будет иметь наименьшее значние
      * перестановка элемнетов первого элемента
-     * @param first  последний элемнет списка
-     * @param last последний элемнет списка
+     *
+     * @param first последний элемнет списка
+     * @param last  последний элемнет списка
      * @return current текущий элемент до которого лист отсорован
      */
-    private Node<T>  partition(Node<T>  first, Node<T> last) {
-        T pivotValue = first.getValue();
-        Node<T>  current = first;
-        Node<T>  next = first.getNext();
+    private Node<T> partition(Node<T> first, Node<T> last, Comparator comparator) {
+        Node<T> pivotValue = first;
+        Node<T> current = first;
+        Node<T> next = first.getNext();
         while (next != last) {
-            if (next.getValue().compareTo(pivotValue) == -1) {
+
+            if (comparator.compare(next.getValue(), pivotValue.getValue()) == -1) {
                 current = current.getNext();
                 swap(current, next);
             }
@@ -284,12 +297,13 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
         swap(current, first);
         return current;
     }
-    private Node<T> partitionReverse(Node<T> last, Node<T> first ) {
-        T pivotValue = last.getValue();
+
+    private Node<T> partitionReverse(Node<T> last, Node<T> first, Comparator comparator) {
+        Node<T> pivotValue = last;
         Node<T> current = last;
         Node<T> previous = last.getPrevious();
         while (previous != first) {
-            if (previous.getValue().compareTo(pivotValue) == -1) {
+            if (comparator.compare(previous.getValue(), pivotValue.getValue()) == -1) {
                 current = current.getPrevious();
                 swap(previous, current);
             }
@@ -303,7 +317,7 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * перестановка элемнетов
      * используется временный элемнет temp для замены значений элементов
      */
-    private void swap(Node<T>  element1, Node<T>  element2) {
+    private void swap(Node<T> element1, Node<T> element2) {
         T temp = element1.getValue();
         element1.setValue(element2.getValue());
         element2.setValue(temp);
@@ -315,16 +329,17 @@ public class MyLinkedList <T extends Comparable<T>> implements MyList {
      * previous продвигается на элемнет пока условие true
      * current продвигается на два элемнет пока условие true
      * когда условие станет false, current дойдет до конца листа, previous будет на середине
+     *
      * @return Node<T> previous средний элемнет
      */
-    public Node<T> getMiddleNode(){
-        if(first == null || first.getNext() == null) {
+    public Node<T> getMiddleNode() {
+        if (first == null || first.getNext() == null) {
             return first;
         }
-        Node<T> previous= first;
-        Node<T> current= first;
+        Node<T> previous = first;
+        Node<T> current = first;
 
-        while(current != null &&  current.getNext() != null){
+        while (current != null && current.getNext() != null) {
             previous = previous.getNext();
             current = current.getNext().getNext();
 

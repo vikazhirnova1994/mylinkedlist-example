@@ -6,13 +6,13 @@
  * Класс  односвязный список со свойствами <b>next</b> , <b>previous</b> , <b>value</b>
  *
  */
-public class Node<T extends Comparable<T> > implements Comparable<Node<T>> {
+public class Node<T> {
 
     /** ссылка на следующий элемент */
-    private Node next;
+    private Node<T> next;
 
     /** ссылка на предыдущий элемент */
-    private Node previous;
+    private Node<T> previous;
 
     /** хранимое значение на предыдущий элемент */
     private T  value;
@@ -23,12 +23,12 @@ public class Node<T extends Comparable<T> > implements Comparable<Node<T>> {
         this.value = data;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
@@ -40,16 +40,16 @@ public class Node<T extends Comparable<T> > implements Comparable<Node<T>> {
         this.value = value;
     }
 
-    public Node getPrevious() {
+    public Node<T> getPrevious() {
         return previous;
     }
 
-    public void setPrevious(Node previous) {
+    public void setPrevious(Node<T> previous) {
         this.previous = previous;
     }
 
-    @Override
+  /*  @Override
     public int compareTo(Node<T> o) {
-        return  value.compareTo(o.value);
-    }
+        return  this.value > (o.value);
+    }*/
 }
