@@ -9,44 +9,22 @@ import java.util.LinkedList;
 public class Main {
     public static void main(String[] args) {
 
-        MyLinkedList<Integer> list = new MyLinkedList<>();
-        list.addLast(4);
-        list.addLast(1);
-        list.addFirst(40);
-        list.addLast(12);
-        list.addLast(17);
-        print(list);
+        MyLinkedList<Person> list = new MyLinkedList<>();
 
-        System.out.println("List contains 30 "+ list.contains(30));
+        Person middleVika = new Person("vika", 21);
+        Person oldVika = new Person("vika", 27);
+        Person youngVika = new Person("vika", 15);
 
-        System.out.println("Middle Node "+ list.getMiddleNode().getValue());
-        list.addMiddle(11);
-        print(list);
-        System.out.println("Middle Node "+ list.getMiddleNode().getValue());
+        list.addLast(middleVika);
+        list.addLast(youngVika);
+        list.addLast(oldVika);
+        list.print();
 
-        list.deleteMiddle();
-        print(list);
+        list.sort(new ComparatorPerson());
+        list.print();
+
+        list.reverseSort(new ComparatorPerson());
+        list.print();
     }
 
-    static void print(MyLinkedList<Integer> list) {
-        Node current = list.getFirst();
-        System.out.print("Values of list ");
-        while (current.getNext() != null) {
-            System.out.print(current.getValue() + " ");
-            current = current.getNext();
-        }
-        System.out.print(current.getValue() + " ");
-        System.out.println("\n-----------------");
-    }
-
-    static void printReverse(MyLinkedList<Integer> list) {
-        Node current = list.getLast();
-        System.out.print("Values of list ");
-        while (current.getPrevious() != null) {
-            System.out.print(current.getValue() + " ");
-            current = current.getPrevious();
-        }
-        System.out.print(current.getValue() + " ");
-        System.out.println("\n-----------------");
-    }
 }

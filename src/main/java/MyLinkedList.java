@@ -193,19 +193,12 @@ public class MyLinkedList<T> implements MyList {
 
     }
 
-    /**
-     * сортировка списка
-     *
-     * @param comparator
-     */
     @Override
     public void sort(Comparator comparator) {
         quickSort(first, last, comparator);
     }
 
-    /**
-     * сортировка списка в обратном порядке
-     */
+
     @Override
     public void reverseSort(Comparator comparator) {
         quickSortReverse(first, last, comparator);
@@ -221,6 +214,18 @@ public class MyLinkedList<T> implements MyList {
             current = current.getNext();
         }
         return false;
+    }
+
+    @Override
+    public void print() {
+        Node<T> current = getFirst();
+        while (current.getNext() != null) {
+            System.out.print(" { " + current.getValue() + " } ");
+            System.out.print(" { " + current.getValue() + " } ");
+            current = current.getNext();
+        }
+        System.out.print(current.getValue() + " ");
+        System.out.println("\n-----------------");
     }
 
     public Node<T> getFirst() {

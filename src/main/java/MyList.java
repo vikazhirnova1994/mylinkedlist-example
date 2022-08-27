@@ -41,4 +41,6 @@ public interface MyList<T> {
     /** проверка наличия элемента */
     public boolean contains(T value);
 
+    /** вывод элемнетов */
+    public void print();
 }
